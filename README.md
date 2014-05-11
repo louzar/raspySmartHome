@@ -18,5 +18,5 @@ Plans:
  * Arduino integration
  
 How to compile native code:
-	* gcc -I$JAVA_HOME/include -I$JAVA_HOME/include/linux -c read-sensor.c -l wiringPi
-	* gcc -shared -o read-sensor.so read-sensor.o -l wiringPi
+  * gcc -I$JAVA_HOME/include -I$JAVA_HOME/include/linux -c read-sensor.c -l wiringPi
+  * gcc -shared -o read-sensor.so read-sensor.o -l wiringPi
