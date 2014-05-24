@@ -6,6 +6,8 @@ import com.dor.smarthome.app.sensors.inerfaces.Valueable;
 import com.dor.smarthome.app.sensors.types.SensorType;
 import com.dor.smarthome.app.status.interfaces.Notifiable;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -21,6 +23,8 @@ public class DHT11Sensor extends Sensor {
     private int gpio;
 
     private Notifiable notifier;
+
+    private static DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
     private DHT11Sensor(int indexNumberParam, SensorType sensorType, int gpio, Notifiable notifier) {
         super(indexNumberParam, sensorType);
@@ -43,7 +47,7 @@ public class DHT11Sensor extends Sensor {
             System.out.println("An error! " + error.getMessage());
         }
         if (response != null && response.length > 3) {
-            return new Value(response[2], response[0], new Date());
+            return new Value(response[2], response[0], dateFormat.format(new Date()));
         }
         return new Value(999, 999, null);
     }
@@ -60,9 +64,9 @@ public class DHT11Sensor extends Sensor {
 
         private int hum;
 
-        private Date date;
+        private String date;
 
-        public Value(int temperature, int humidity, Date date) {
+        public Value(int temperature, int humidity, String date) {
             this.temp = temperature;
             this.hum = humidity;
             this.date = date;
@@ -76,7 +80,7 @@ public class DHT11Sensor extends Sensor {
             return hum;
         }
 
-        public Date getDate() {
+        public String getDate() {
             return date;
         }
     }

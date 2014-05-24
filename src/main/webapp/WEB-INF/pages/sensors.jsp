@@ -7,28 +7,9 @@
     <script src="<c:url value="/resources/scripts/sensors-charts.js" />"></script>
     <script>
         $(document).ready(function() {
-
-
+            historyAjaxRequest();
         });
-        function ajaxRequest() {
-            var data = {
-                sensorIndex:'0',
-                'sensorType':"DHT11"
-            };
-            $.ajax({
-                url: 'sensors/get/history',
-                type: 'POST',
-                data: JSON.stringify(data),
-                beforeSend: function( xhr ) {
-                    xhr.setRequestHeader('Accept','*/*');
-                    xhr.setRequestHeader('Content-Type','application/json');
-                },
-                success: callbackfunction
-            });
-        }
-        function callbackfunction(data, textStatus, jqXHR) {
-            console.log(data);
-        }
+
     </script>
 </head>
 <body>

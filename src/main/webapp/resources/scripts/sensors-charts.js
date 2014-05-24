@@ -13,11 +13,34 @@ var dataSource = [
     { month: "December", avgT: 9.6, minT: 3.4, maxT: 15.7, prec: 76 }
 ];
 
+var historySource;
+
+function historyAjaxRequest() {
+    var data = {
+        sensorIndex:'0',
+        'sensorType':"DHT11"
+    };
+    $.ajax({
+        url: 'sensors/get/history',
+        type: 'POST',
+        data: JSON.stringify(data),
+        beforeSend: function( xhr ) {
+            xhr.setRequestHeader('Accept','*/*');
+            xhr.setRequestHeader('Content-Type','application/json');
+        },
+        success: callbackfunction
+    });
+}
+function callbackfunction(data, textStatus, jqXHR) {
+    historySource = data.history;
+    createChart();
+}
+
 function createChart() {
     $("#chartContainer").dxChart({
-        dataSource: dataSource,
+        dataSource: historySource,
         commonSeriesSettings:{
-            argumentField: "month"
+            argumentField: "date"
         },
         panes: [{
             name: "topPane"
@@ -28,12 +51,12 @@ function createChart() {
             pane: "topPane",
             color: "#87CEEB",
             type: "rangeArea",
-            rangeValue1Field: "minT",
-            rangeValue2Field: "maxT",
-            name: "Monthly Temperature Ranges, °C"
+            rangeValue1Field: "temp",
+            rangeValue2Field: "temp",
+            name: "Temperature Ranges, °C"
         }, {
             pane: "topPane",
-            valueField: "avgT",
+            valueField: "temp",
             name: "Average Temperature, °C",
             label: {
                 visible: true,
@@ -43,12 +66,12 @@ function createChart() {
             }
         }, {
             type: "bar",
-            valueField: "prec",
-            name: "prec, mm",
+            valueField: "hum",
+            name: "hum, %",
             label: {
                 visible: true,
                 customizeText: function (){
-                    return this.valueText  + " mm";
+                    return this.valueText  + "%";
                 }
             }
         }
@@ -59,12 +82,12 @@ function createChart() {
                 visible: true
             },
             title: {
-                text: "Precipitation, mm"
+                text: "Humidity,%"
             }
         }, {
             pane: "topPane",
-            min: 0,
-            max: 30,
+            min: -30,
+            max: 40,
             grid: {
                 visible: true
             },
@@ -77,7 +100,7 @@ function createChart() {
             horizontalAlignment: "center"
         },
         title: {
-            text: "Weather in Glendale, CA"
+            text: "Temperature and humidity history"
         }
     });
 }
