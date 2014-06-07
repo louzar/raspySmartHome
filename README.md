@@ -1,13 +1,13 @@
 Raspberry Pi Smart Home
 ==============
 
-Alpha version. Temperature and humidity information gathering.
+Alpha version. Temperature, atmosphere pressure and humidity information gathering.
 REST web service provided. Tested on jetty and winstone web servers.
 LED notofication (just for test).
 
 Supported sensors:
- * DHT11
- * BMP085
+ * DHT11 (native code)
+ * BMP085 (via pi4j library)
  
 Plans:
  * increase the number of supported sensors
