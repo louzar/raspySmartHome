@@ -7,7 +7,7 @@ LED notofication (just for test).
 
 Supported sensors:
  * DHT11
-
+ * BMP085
 Plans:
  * increase the number of supported sensors
  * web application for monitoring
