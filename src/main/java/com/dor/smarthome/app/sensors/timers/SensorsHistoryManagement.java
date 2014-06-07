@@ -1,9 +1,9 @@
 package com.dor.smarthome.app.sensors.timers;
 
 import com.dor.smarthome.app.sensors.SensorsContainer;
-import com.dor.smarthome.app.sensors.inerfaces.Sensor;
+import com.dor.smarthome.app.sensors.types.interfaces.AbstractSensor;
 import com.dor.smarthome.app.sensors.inerfaces.SensorTimer;
-import com.dor.smarthome.app.sensors.inerfaces.Valueable;
+import com.dor.smarthome.app.sensors.types.interfaces.Valueable;
 import com.dor.smarthome.app.sensors.types.SensorType;
 import com.dor.smarthome.utils.Pair;
 import com.dor.smarthome.utils.props.PropertiesManager;
@@ -32,7 +32,7 @@ public class SensorsHistoryManagement implements SensorTimer {
     @Autowired
     private PropertiesManager propertiesManager;
 
-    private ConcurrentHashMap<Pair<Integer, SensorType>, Pair<Sensor, CopyOnWriteArrayList<Valueable>>> map = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<Pair<Integer, SensorType>, Pair<AbstractSensor, CopyOnWriteArrayList<Valueable>>> map = new ConcurrentHashMap<>();
 
     private int timerInterval;
 
@@ -49,8 +49,8 @@ public class SensorsHistoryManagement implements SensorTimer {
         historySize = getHistorySize();
         timerInterval = getHistoryInterval();
         for (SensorType type : SensorType.values()) {
-            Map<Integer, Sensor> sensorsByType = sensorsContainer.getSensorsByType(type);
-            for (Map.Entry<Integer, Sensor> entry : sensorsByType.entrySet()) {
+            Map<Integer, AbstractSensor> sensorsByType = sensorsContainer.getSensorsByType(type);
+            for (Map.Entry<Integer, AbstractSensor> entry : sensorsByType.entrySet()) {
                 map.put(new Pair<>(entry.getValue().getIndexNumber(), entry.getValue().getType()), new Pair<>(entry.getValue(), new CopyOnWriteArrayList<Valueable>()));
             }
         }
@@ -65,7 +65,7 @@ public class SensorsHistoryManagement implements SensorTimer {
             System.out.println("thread...");
             try {
                 Thread.sleep(timerInterval);
-                for (Pair<Sensor, CopyOnWriteArrayList<Valueable>> value : map.values()) {
+                for (Pair<AbstractSensor, CopyOnWriteArrayList<Valueable>> value : map.values()) {
                     CopyOnWriteArrayList<Valueable> list = value.getValue();
                     if (list.size() >= historySize) {
                         list.remove(0);

@@ -1,30 +1,26 @@
 package com.dor.smarthome.app.sensors.types.dht11;
 
-import com.dor.smarthome.app.sensors.inerfaces.Sensor;
-import com.dor.smarthome.app.sensors.inerfaces.SensorTimer;
-import com.dor.smarthome.app.sensors.inerfaces.Valueable;
+import com.dor.smarthome.app.sensors.types.interfaces.AbstractSensor;
+import com.dor.smarthome.app.sensors.types.interfaces.Valueable;
 import com.dor.smarthome.app.sensors.types.SensorType;
 import com.dor.smarthome.app.status.interfaces.Notifiable;
+import com.dor.smarthome.utils.SensorUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *
  * Created by dor on 27.04.2014.
  */
-public class DHT11Sensor extends Sensor {
+public class DHT11Sensor extends AbstractSensor {
 
     private DHT11Reader reader;
 
     private int gpio;
 
     private Notifiable notifier;
-
-    private static DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
     private DHT11Sensor(int indexNumberParam, SensorType sensorType, int gpio, Notifiable notifier) {
         super(indexNumberParam, sensorType);
@@ -47,7 +43,7 @@ public class DHT11Sensor extends Sensor {
             System.out.println("An error! " + error.getMessage());
         }
         if (response != null && response.length > 3) {
-            return new Value(response[2], response[0], dateFormat.format(new Date()));
+            return new Value(response[2], response[0], SensorUtils.getDateFormat().format(new Date()));
         }
         return new Value(999, 999, null);
     }

@@ -1,7 +1,7 @@
 package com.dor.ws;
 
 import com.dor.smarthome.app.sensors.SensorsContainer;
-import com.dor.smarthome.app.sensors.inerfaces.Sensor;
+import com.dor.smarthome.app.sensors.types.interfaces.AbstractSensor;
 import com.dor.smarthome.app.sensors.timers.SensorsHistoryManagement;
 import com.dor.ws.jsonobjs.inputs.SensorHistoryInput;
 import com.dor.ws.jsonobjs.inputs.SensorValueInput;
@@ -49,7 +49,7 @@ public class SensorsWebServiceController {
         if (input.getSensorType() != null) {
             switch (input.getSensorType()) {
                 case DHT11:
-                    Sensor dht11Sensor = sensorsContainer.getExistingSensor(input.getSensorType(), input.getSensorIndex());
+                    AbstractSensor dht11Sensor = sensorsContainer.getExistingSensor(input.getSensorType(), input.getSensorIndex());
                     return new SensorValueOutput(dht11Sensor.getResponse());
                 default:
                     throw new UnsupportedDataTypeException("Sensor type is undefined!");

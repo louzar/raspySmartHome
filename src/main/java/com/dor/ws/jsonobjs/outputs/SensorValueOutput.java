@@ -1,6 +1,6 @@
 package com.dor.ws.jsonobjs.outputs;
 
-import com.dor.smarthome.app.sensors.inerfaces.Valueable;
+import com.dor.smarthome.app.sensors.types.interfaces.Valueable;
 
 /**
  * Author: kolpakov.and@gmail.com

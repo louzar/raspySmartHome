@@ -1,4 +1,4 @@
-package com.dor.smarthome.app.sensors.inerfaces;
+package com.dor.smarthome.app.sensors.types.interfaces;
 
 import com.dor.smarthome.app.sensors.types.SensorType;
 
@@ -6,13 +6,13 @@ import com.dor.smarthome.app.sensors.types.SensorType;
  *
  * Created by dor on 27.04.2014.
  */
-public abstract class Sensor implements Responsable{
+public abstract class AbstractSensor implements Sensor {
 
     private final int indexNumber;
 
     private final SensorType type;
 
-    protected Sensor(int indexNumber, SensorType type) {
+    protected AbstractSensor(int indexNumber, SensorType type) {
         this.indexNumber = indexNumber;
         this.type = type;
     }
@@ -32,7 +32,7 @@ public abstract class Sensor implements Responsable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Sensor sensor = (Sensor) o;
+        AbstractSensor sensor = (AbstractSensor) o;
 
         if (indexNumber != sensor.indexNumber) return false;
         if (type != sensor.type) return false;

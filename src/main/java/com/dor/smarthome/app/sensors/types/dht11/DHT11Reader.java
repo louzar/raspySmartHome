@@ -16,7 +16,7 @@ public class DHT11Reader {
         System.load("/home/pi/java_projects/dht11/read-sensor.so");
     }
 
-    public native int[] getResponse(int gpio);
+    private native int[] getResponse(int gpio);
 
     public int[] getClearResponse(int gpio) {
         int[] response = getResponse(gpio);

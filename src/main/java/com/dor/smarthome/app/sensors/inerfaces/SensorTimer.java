@@ -1,6 +1,7 @@
 package com.dor.smarthome.app.sensors.inerfaces;
 
 import com.dor.smarthome.app.sensors.types.SensorType;
+import com.dor.smarthome.app.sensors.types.interfaces.Valueable;
 
 import java.util.List;
 

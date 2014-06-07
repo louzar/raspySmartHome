@@ -1,4 +1,4 @@
-package com.dor.smarthome.app.sensors.inerfaces;
+package com.dor.smarthome.app.sensors.types.interfaces;
 
 /**
  *
