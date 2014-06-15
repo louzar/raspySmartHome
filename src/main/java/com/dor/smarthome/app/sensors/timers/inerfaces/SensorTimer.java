@@ -1,4 +1,4 @@
-package com.dor.smarthome.app.sensors.inerfaces;
+package com.dor.smarthome.app.sensors.timers.inerfaces;
 
 import com.dor.smarthome.app.sensors.types.SensorType;
 import com.dor.smarthome.app.sensors.types.interfaces.Valueable;

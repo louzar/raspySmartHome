@@ -1,4 +1,4 @@
-package com.dor.smarthome.app.sensors.inerfaces;
+package com.dor.smarthome.app.sensors.timers.inerfaces;
 
 /**
  * Author: kolpakov.and@gmail.com

@@ -2,7 +2,7 @@ package com.dor.smarthome.app.sensors.timers;
 
 import com.dor.smarthome.app.sensors.SensorsContainer;
 import com.dor.smarthome.app.sensors.types.interfaces.AbstractSensor;
-import com.dor.smarthome.app.sensors.inerfaces.SensorTimer;
+import com.dor.smarthome.app.sensors.timers.inerfaces.SensorTimer;
 import com.dor.smarthome.app.sensors.types.interfaces.Valueable;
 import com.dor.smarthome.app.sensors.types.SensorType;
 import com.dor.smarthome.utils.Pair;
@@ -42,7 +42,6 @@ public class SensorsHistoryManagement implements SensorTimer {
 
     @PostConstruct
     public void init() {
-        System.out.println("bean inited");
         if (isInited) {
             return;
         }
@@ -62,7 +61,6 @@ public class SensorsHistoryManagement implements SensorTimer {
 
     private void runHistory() {
         while (true) {
-            System.out.println("thread...");
             try {
                 Thread.sleep(timerInterval);
                 for (Pair<AbstractSensor, CopyOnWriteArrayList<Valueable>> value : map.values()) {
