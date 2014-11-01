@@ -9,4 +9,5 @@
 
     <import resource="smart-spring-mvc.xml"/>
     <import resource="smart-entityManager.xml"/>
+    <import resource="smart-daos.xml"/>
 </beans>

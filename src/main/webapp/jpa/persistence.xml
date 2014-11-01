@@ -15,7 +15,7 @@
                       value="org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory"/>
             <property name="hibernate.cache.use_second_level_cache" value="false"/>
             <property name="hibernate.cache.use_query_cache" value="false"/>
-            <property name="hibernate.generate_statistics" value="true"/>
+            <property name="hibernate.generate_statistics" value="false"/>
             <property name="hibernate.enable_lazy_load_no_trans" value="true"/>
         </properties>
     </persistence-unit>

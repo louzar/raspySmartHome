@@ -34,7 +34,7 @@ public class TemperatureHistoryPO implements Serializable {
     @Id
     @Column(name = "ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqGeneratorKoNu")
-    @SequenceGenerator(name = "seqGeneratorKoNu", sequenceName = "SEQ_KONTINGENTNUTZUNG", initialValue = 1)
+    @SequenceGenerator(name = "seqGeneratorKoNu", sequenceName = "TemperatureHistory_seq", initialValue = 1)
     public Long getId() {
         return id;
     }
