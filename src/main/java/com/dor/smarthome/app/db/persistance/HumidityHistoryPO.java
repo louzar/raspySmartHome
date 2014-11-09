@@ -5,13 +5,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Author: kolpakov.and@gmail.com
- * Created by dor on 15.06.2014.
+ * Created by andrew on 09.11.14.
  */
 @Entity
-@Table(schema = "PUBLIC", name = "TemperatureHistory")
-public class TemperatureHistoryPO implements Serializable {
-
+@Table(schema = "PUBLIC", name = "HumidityHistory")
+public class HumidityHistoryPO implements Serializable {
     /**
      * The Constant serialVersionUID.
      */
@@ -24,7 +22,7 @@ public class TemperatureHistoryPO implements Serializable {
 
     private Date measureDate;
 
-    private Integer temperature;
+    private Integer humidity;
 
     /**
      * Get id of the protocol.
@@ -42,8 +40,7 @@ public class TemperatureHistoryPO implements Serializable {
     /**
      * Set id.
      *
-     * @param newVal
-     *            id
+     * @param newVal id
      */
     public void setId(Long newVal) {
         id = newVal;
@@ -59,12 +56,12 @@ public class TemperatureHistoryPO implements Serializable {
         this.measureDate = measureDate;
     }
 
-    @Column(name = "temperature")
-    public Integer getTemperature() {
-        return temperature;
+    @Column(name = "humidity")
+    public Integer getHumidity() {
+        return humidity;
     }
 
-    public void setTemperature(Integer temperature) {
-        this.temperature = temperature;
+    public void setHumidity(Integer humidity) {
+        this.humidity = humidity;
     }
 }

@@ -3,6 +3,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-    <bean id="vertriebspunktElementDao"
+    <bean id="temperatureHistoryDao"
           class="com.dor.smarthome.app.db.daos.TemperatureHistoryDao"/>
+    <bean id="humidityHistoryDao"
+          class="com.dor.smarthome.app.db.daos.HumidityHistoryDao"/>
 </beans>

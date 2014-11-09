@@ -2,21 +2,13 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
        http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0">
-    <persistence-unit name="smartUnitName">
+    <persistence-unit name="smartUnitName" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>com.dor.smarthome.app.db.persistance.TemperatureHistoryPO</class>
+        <class>com.dor.smarthome.app.db.persistance.HumidityHistoryPO</class>
         <properties>
-            <property name="hibernate.archive.autodetection" value="class, hbm"/>
-            <property name="hibernate.show_sql" value="false"/>
-            <property name="hibernate.format_sql" value="true"/>
-            <property name="hibernate.jdbc.batch_size" value="10000"/>
-            <property name="connection.pool.size" value="5"/>
-            <property name="current_session_context_class" value="managed"/>
-            <property name="hibernate.query.factory_class"
-                      value="org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory"/>
-            <property name="hibernate.cache.use_second_level_cache" value="false"/>
-            <property name="hibernate.cache.use_query_cache" value="false"/>
-            <property name="hibernate.generate_statistics" value="false"/>
-            <property name="hibernate.enable_lazy_load_no_trans" value="true"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.transaction.flush_before_completion" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>

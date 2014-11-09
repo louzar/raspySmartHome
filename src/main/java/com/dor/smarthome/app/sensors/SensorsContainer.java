@@ -1,6 +1,6 @@
 package com.dor.smarthome.app.sensors;
 
-import com.dor.smarthome.app.db.daos.TemperatureHistoryDao;
+import com.dor.smarthome.app.db.daos.DaoHolder;
 import com.dor.smarthome.app.sensors.types.SensorType;
 import com.dor.smarthome.app.sensors.types.bmp085.BMP085Sensor;
 import com.dor.smarthome.app.sensors.types.dht11.DHT11Sensor;
@@ -34,7 +34,7 @@ public class SensorsContainer {
     private NotifiersContainer notifiersContainer;
 
     @Autowired
-    private TemperatureHistoryDao temperatureHistoryDao;
+    private DaoHolder daoHolder;
 
     @PostConstruct
     public void init() {
@@ -76,7 +76,7 @@ public class SensorsContainer {
                 gpio = Integer.valueOf(sensorPropertyValue.getGpio());
                 Notifiable notifier = notifiersContainer.getExistingNotifier(
                         sensorPropertyValue.getNotifierType(), Integer.valueOf(sensorPropertyValue.getNotifierIndex()));
-                sensor = DHT11Sensor.getInstance(index, gpio, notifier, temperatureHistoryDao);
+                sensor = DHT11Sensor.getInstance(index, gpio, notifier, daoHolder);
                 break;
             case BMP085:
                 index = Integer.valueOf(sensorPropertyValue.getIndex());

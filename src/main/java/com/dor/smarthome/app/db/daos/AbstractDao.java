@@ -1,5 +1,9 @@
 package com.dor.smarthome.app.db.daos;
 
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
@@ -36,6 +40,8 @@ public abstract class AbstractDao<T, ID extends Serializable> {
         return classType;
     }
 
+    abstract PlatformTransactionManager getTransactionManager();
+
     public final T read(ID id) {
         return entityManager.find(classType, id);
     }
@@ -46,20 +52,30 @@ public abstract class AbstractDao<T, ID extends Serializable> {
         return tq.getResultList();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public final T persist(T transientObject) {
+        TransactionStatus transactionStatus = getTransactionManager().getTransaction(new DefaultTransactionDefinition());
         try {
             getEntityManager().persist(transientObject);
+            getTransactionManager().commit(transactionStatus);
             return transientObject;
         } catch (PersistenceException ex) {
+            getTransactionManager().rollback(transactionStatus);
+            System.out.println(ex.getMessage());
             return null; // this line is never reached
         }
     }
 
     public final T merge(T transientObject) {
+        TransactionStatus transactionStatus = getTransactionManager().getTransaction(new DefaultTransactionDefinition());
         try {
-            return getEntityManager().merge(transientObject);
+            T result = getEntityManager().merge(transientObject);
+            getTransactionManager().commit(transactionStatus);
+            return result;
         } catch (PersistenceException ex) {
+            getTransactionManager().rollback(transactionStatus);
             return null; // this line is never reached
         }
     }
@@ -79,12 +95,16 @@ public abstract class AbstractDao<T, ID extends Serializable> {
         return result;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public final EntityManager getEntityManager() {
         return entityManager;
     }

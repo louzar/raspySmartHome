@@ -1,12 +1,14 @@
 package com.dor.smarthome.app.sensors.types.dht11;
 
-import com.dor.smarthome.app.db.daos.AbstractDao;
+import com.dor.smarthome.app.db.daos.DaoHolder;
+import com.dor.smarthome.app.db.persistance.HumidityHistoryPO;
 import com.dor.smarthome.app.db.persistance.TemperatureHistoryPO;
 import com.dor.smarthome.app.sensors.types.SensorType;
 import com.dor.smarthome.app.sensors.types.interfaces.AbstractSensor;
 import com.dor.smarthome.app.sensors.types.interfaces.Valueable;
 import com.dor.smarthome.app.status.interfaces.Notifiable;
 import com.dor.smarthome.utils.SensorUtils;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -22,7 +24,7 @@ public class DHT11Sensor extends AbstractSensor {
 
     private Notifiable notifier;
 
-    private AbstractDao temperatureHistoryDao;
+    private DaoHolder daoHolder;
 
     private DHT11Sensor(int indexNumberParam, SensorType sensorType, int gpio, Notifiable notifier) {
         super(indexNumberParam, sensorType);
@@ -31,13 +33,14 @@ public class DHT11Sensor extends AbstractSensor {
         reader = new DHT11Reader();
     }
 
-    public static DHT11Sensor getInstance(int indexNumberParam, int gpio, Notifiable notifier, AbstractDao dao) {
+    public static DHT11Sensor getInstance(int indexNumberParam, int gpio, Notifiable notifier, DaoHolder daoHolder) {
         DHT11Sensor dht11Sensor = new DHT11Sensor(indexNumberParam, SensorType.DHT11, gpio, notifier);
-        dht11Sensor.temperatureHistoryDao = dao;
+        dht11Sensor.daoHolder = daoHolder;
         return dht11Sensor;
     }
 
     @Override
+    @Transactional(readOnly = false)
     public Value getResponse() {
         notifyAtResponse();
         int[] response = null;
@@ -50,7 +53,13 @@ public class DHT11Sensor extends AbstractSensor {
             TemperatureHistoryPO temperatureHistoryPO = new TemperatureHistoryPO();
             temperatureHistoryPO.setMeasureDate(new Date());
             temperatureHistoryPO.setTemperature(response[2]);
-            temperatureHistoryDao.merge(temperatureHistoryPO);
+            daoHolder.getTemperatureHistoryDao().persist(temperatureHistoryPO);
+
+            HumidityHistoryPO humidityHistoryPO = new HumidityHistoryPO();
+            humidityHistoryPO.setMeasureDate(new Date());
+            humidityHistoryPO.setHumidity(response[0]);
+            daoHolder.getHumidityHistoryDao().persist(humidityHistoryPO);
+
             return new Value(response[2], response[0], SensorUtils.getDateFormat().format(new Date()));
         }
         return new Value(999, 999, null);
